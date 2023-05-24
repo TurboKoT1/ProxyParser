@@ -32,7 +32,7 @@ class ProxyParser:
         This function parses proxies.
 
         Args:
-            proxy sites (list): List of sites from which proxies'll be parsed.
+            proxy_sites (list): List of sites from which proxies'll be parsed.
 
         Returns:
             List: List of parsed proxies.
@@ -40,11 +40,16 @@ class ProxyParser:
 
         proxies = []
 
-        for site in proxy_sites:
-            site_text = requests.get(site).text
+        try:
+            for site in proxy_sites:
+                site_text = requests.get(site).text
 
-            for proxy in site_text.split("\n"):
-                proxies.append(proxy)
+                for proxy in site_text.split("\n"):
+                    proxies.append(proxy)
+        except TypeError:
+            raise TypeError("Invalid proxy sites data-type")
+        except requests.RequestException:
+            raise RuntimeError(f"An error has been occured with attempt to parse proxy from site: {site}")
 
         return proxies
     
@@ -58,18 +63,17 @@ class ProxyParser:
 
         Returns:
             Boolean: Is proxy working?
-
-        Raises:
-            Exception: Description of the exception raised, if applicable.
         """
 
-        splitted_proxy = proxy.split(":")
-
         try:
+            splitted_proxy = proxy.split(":")
+
             ip = splitted_proxy[0]
             port = int(splitted_proxy[1])
         except IndexError:
-            raise IndexError("Invalid proxy format") 
+            raise IndexError("Invalid proxy format")
+        except AttributeError:
+            raise AttributeError("Invalid proxy data-type")
 
         new_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         new_socket.settimeout(timeout)
