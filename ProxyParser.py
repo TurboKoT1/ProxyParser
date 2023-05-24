@@ -27,7 +27,7 @@ class ProxyParser:
     def __init__(self):
         pass
 
-    def parseProxy(proxy_sites=["https://api.proxyscrape.com/?request=displayproxies&proxytype=https", "https://api.proxyscrape.com/?request=displayproxies&proxytype=http"]):
+    def parseProxy(proxy_sites=["https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt"]):
         """
         This function parses proxies.
 
@@ -43,7 +43,7 @@ class ProxyParser:
         for site in proxy_sites:
             site_text = requests.get(site).text
 
-            for proxy in site_text.split("\r\n"):
+            for proxy in site_text.split("\n"):
                 proxies.append(proxy)
 
         return proxies
