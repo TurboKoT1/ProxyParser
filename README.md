@@ -25,4 +25,4 @@ $ python -m pip install proxyparser-checker
 ```
 ProxyParser officially supports Python 3.7+.
 
-[**GitHub**](https://github.com/TurboKoT1/ProxyParser)
+[**PyPi**](https://pypi.org/project/proxyparser-checker/)
